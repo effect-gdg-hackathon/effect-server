@@ -1,0 +1,15 @@
+type Query {
+    effectById(id: ID!): Effect
+    effectsByCategoryId(categoryId: ID!): [Effect!]!
+    effectsByPostIds(postIds: [ID!]!): [Effect!]!
+    effectsByCreatorId(creatorId: ID!): [Effect!]!
+}
+
+type Effect {
+    title: String!
+    content: String!
+    imageUrl: String
+    category: String! # life, interview, popular
+    creatorId: ID!
+    postId: ID!
+}
