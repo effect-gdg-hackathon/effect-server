@@ -31,7 +31,8 @@ router.post("/",  upload.single("image"), async (req, res) => {
     creatorId: userId,
     category,
     parentPostId,
-    imageUrl
+    imageUrl,
+    score: Math.floor(Math.random() * 100) + 1,
   }
 
   await postIdCollection.updateOne({type: 'postId'}, {$inc: {value: 1}}, {upsert: true})
