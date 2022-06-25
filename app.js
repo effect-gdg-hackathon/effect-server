@@ -16,6 +16,7 @@ const { effectCollection } = require('./db')
 const { loadGraphql } = require('./graphql')
 
 app.use(express.json());
+app.use(express.static('public'));
 
 app.use("/api/upload", uploadRouter);
 app.use("/api/posts/:postId", detailRouter);
