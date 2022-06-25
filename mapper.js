@@ -1,10 +1,16 @@
 exports.effectMapper = {
     map: function(effect) {
-        const isAbsolute = effect.imageUrl.startsWith('http')
+        let imageUrl = effect.imageUrl
+        if (!imageUrl) {
+            const idx = effect.postId % 4
+            imageUrl = `/images/default-${idx}.jpeg`
+        }
+
+        const isAbsolute = imageUrl.startsWith('http')
 
         return {
             ...effect,
-            imageUrl: isAbsolute ? effect.imageUrl : `${process.env.API_URL}${effect.imageUrl}`,
+            imageUrl: isAbsolute ? imageUrl : `${process.env.API_URL}${imageUrl}`,
         }
     },
     mapList: function(effects) {

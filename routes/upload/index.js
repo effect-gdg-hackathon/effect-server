@@ -18,7 +18,12 @@ const upload = multer({ storage: storage });
 
 router.post("/",  upload.single("image"), async (req, res) => {
   const { title, content, userId, category, parentPostId } = req.body;
-  const imageUrl = `/images/${req.file.filename}`
+
+  let imageUrl = ''
+
+  if (req.file) {
+    imageUrl = `/images/${req.file.filename}`
+  }
 
   const effect = {
     title,
@@ -44,9 +49,11 @@ router.post("/image",  upload.single("image"), async (req, res) => {
     imageUrl
   }
 
-  await postIdCollection.updateOne({type: 'postId'}, {$inc: {value: 1}}, {upsert: true})
-  const postId = (await postIdCollection.findOne({type: 'postId'})).value + ''
-  await effectCollection.insertOne({...effect, postId: postId})
+  const postId = req.body.postId
+
+  // await postIdCollection.updateOne({type: 'postId'}, {$inc: {value: 1}}, {upsert: true})
+  // const postId = (await postIdCollection.findOne({type: 'postId'})).value + ''
+  await effectCollection.updateOne({postId}, {$set: {imageUrl}})
 
   res.json({postId}).status(200);
 });
