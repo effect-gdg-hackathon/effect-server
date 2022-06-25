@@ -1,5 +1,6 @@
 const express = require("express"); // module for express framework
 const { effectCollection } = require("../../db");
+const { effectMapper } = require("../../mapper");
 const router = express.Router({ mergeParams: true });
 
 router.get("/", async (req, res) => {
@@ -17,7 +18,7 @@ router.get("/", async (req, res) => {
   }
 
   res.json({
-    list : effect
+    list : effectMapper.mapList(effect)
   }).status(200);
 });
 

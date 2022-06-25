@@ -1,6 +1,6 @@
 type Query {
     effectById(id: ID!): Effect
-    effectsByCategoryId(categoryId: ID!): [Effect!]!
+    effectsByCategoryId(category: String!): [Effect!]!
     effectsByPostIds(postIds: [ID!]!): [Effect!]!
     effectsByCreatorId(creatorId: ID!): [Effect!]!
 }
