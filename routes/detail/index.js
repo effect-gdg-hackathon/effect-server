@@ -6,9 +6,15 @@ router.get("/", async (req, res) => {
   const postId = req.query.postId;
 
   const effect = await effectCollection.findOne({postId});
-  console.log(effect);
 
-  res.sendStatus(200);
+  res.json({
+    title: effect.title,
+    content: effect.content,
+    imageUrl: effect.imageUrl,
+    postId: effect.postId,
+    creatorId: effect.creatorId,
+    category: effect.category,
+  }).status(200);
 });
 
 module.exports = router;
