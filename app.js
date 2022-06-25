@@ -9,7 +9,7 @@ const postsRouter = require('./routes/posts')
 app.use(express.json());
 
 app.use("/api/upload", uploadRouter);
-app.use("/api/detail", detailRouter);
+app.use("/api/posts/:postId", detailRouter);
 app.use("/api/posts", postsRouter);
 
 app.listen(port, () => {
