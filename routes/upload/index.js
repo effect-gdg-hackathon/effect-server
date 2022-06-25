@@ -17,7 +17,10 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 router.post("/",  upload.single("image"), async (req, res) => {
-  const { title, content, userId, category, parentPostId } = req.body;
+  const { data } = req.body;
+  const { userId } = req.query;
+
+  const { title, content, category, parentPostId } = JSON.parse(data)
 
   let imageUrl = ''
 
@@ -30,7 +33,7 @@ router.post("/",  upload.single("image"), async (req, res) => {
     content,
     creatorId: userId,
     category,
-    parentPostId,
+    parentPostId: parentPostId ? parentPostId : undefined,
     imageUrl,
     score: Math.floor(Math.random() * 100) + 1,
   }

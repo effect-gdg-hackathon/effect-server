@@ -7,8 +7,24 @@ router.get("/", async (req, res) => {
   let param;
   let effect;
   if (req.query.category !== undefined) {
-    param = req.query.category;
-    effect = await effectCollection.find({category: param}).toArray();
+    let options = {}
+    const category = req.query.category.toLowerCase()
+
+    param = {}
+    if (category === "popular") {
+      // find top 10 effects by score
+      options = {
+        sort: {
+          score: -1,
+        },
+        limit: 10,
+      };
+    } else {
+      // find effects by category
+      param = { category };
+    }
+
+    effect = await effectCollection.find(param, options).toArray();
   } else if (req.query.postIds !== undefined){
     param = req.query.postIds;
     effect = await effectCollection.find({postId: { $in: param.split(",") }}).toArray();
